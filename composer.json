@@ -1,0 +1,19 @@
+{
+  "name": "rosenzhang/spf",
+  "description": "The Swoole Helper Framework.",
+  "keywords": [
+    "framework",
+    "spf"
+  ],
+  "license": "MIT",
+  "type": "project",
+  "require": {
+  },
+  "autoload": {
+  },
+  "scripts": {
+  },
+  "config": {
+  },
+  "minimum-stability": "stable"
+}
