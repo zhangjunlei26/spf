@@ -30,8 +30,8 @@ class Manager extends Base {
             self::log($msg);
             return false;
         }
-        @unlink(self::getMasterPidFile($this->name));
-        @unlink(self::getManagerPidFile($this->name));
+//        @unlink(self::getMasterPidFile($this->name));
+//        @unlink(self::getManagerPidFile($this->name));
         usleep(50000);
         $msg = "[Seccess] Stop Master:{$master_id} sucess.";
         echo Console::green($msg), PHP_EOL;

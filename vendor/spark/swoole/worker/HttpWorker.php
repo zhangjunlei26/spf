@@ -60,6 +60,7 @@ class HttpWorker extends Base implements IHttpWorker {
         //保存到容器
         $container['route'] = new Route();
         $container['scheduler'] = new Scheduler();
+        $container['swoole_server'] = $this->server;
         App::$workerContainer = $container;
     }
 }

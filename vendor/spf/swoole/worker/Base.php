@@ -13,8 +13,10 @@ class Base {
     protected $workerProcessName;
     protected $config;
     protected $logger;
+    protected $server;
 
-    public function __construct($serverName, $workerId, $processName, $config) {
+    public function __construct($server, $serverName, $workerId, $processName, $config) {
+        $this->server = $server;
         $this->name = $serverName;
         $this->workId = $workerId;
         $this->workerProcessName = $processName;
@@ -26,6 +28,7 @@ class Base {
     }
 
     public function onStart($server, $workerId) {
+        $this->server = $server;
         echo Console::green("onWorkerStart: {$this->workerProcessName}"), PHP_EOL;
     }
 

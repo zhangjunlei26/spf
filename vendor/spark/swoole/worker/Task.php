@@ -11,8 +11,9 @@ namespace spark\swoole\worker;
 use spark\Log;
 use spark\logger\Logger;
 use spf\helper\Console;
+use spf\swoole\Base;
 
-class Task extends Base {
+class Task extends \spf\swoole\worker\Base {
 
     public static $taskContainer;
 
@@ -33,7 +34,10 @@ class Task extends Base {
             if (isset($data[1])) {
                 $args = is_scalar($data[1]) ? [$data[1]] : $data[1];
             }
-            $taskService = $container->register($class);
+            if(!isset($container[$class])){
+                $container[$class] = new $class();
+            }
+            $taskService = $container[$class];
             if (!$taskService) {//task类不存在
                 break;
             }
@@ -77,7 +81,7 @@ class Task extends Base {
     }
 
     protected function init() {
-        $config = Swh::getConf('common', 'spark');
+        $config = Base::getConf('common', 'spark');
         Log::setLogger(new Logger($config['task_logger']));//创建会话容器
         set_error_handler([$this, 'errorHandler']);
     }

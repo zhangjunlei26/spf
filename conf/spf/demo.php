@@ -33,6 +33,7 @@ $config = [
      * worker进程用哪个类名，由用户指定自己实现的worker/tasker类,自定制进程工作行为
      */
     'worker_class'   => '\spark\swoole\worker\HttpWorker',
+    'task_class'   => '\spark\swoole\worker\Task',
     /**
      * ini_set
      */
@@ -57,8 +58,8 @@ $config = [
         //'reactor_num'              => 4,
         //默认启用CPU核数相同的工作进程，建议值为CPU核1-4倍
         'worker_num'          => 1,
-//        'task_worker_num'          => 500,
-//        'task_max_request'         => 500000,
+        'task_worker_num'          => 5,
+        'task_max_request'         => 500000,
         'open_cpu_affinity'   => 1,
         'open_tcp_nodelay'    => 1,
         'tcp_defer_accept'    => 3,//http服务器，可以提升响应速度
@@ -73,7 +74,7 @@ if ($config['enviroment'] !== 'production') {
     $config['server_setting']['reactor_num'] = 1;
     $config['server_setting']['worker_num'] = 1;
     $config['server_setting']['max_request'] = 100;
-    $config['server_setting']['task_worker_num'] = 0;
+    $config['server_setting']['task_worker_num'] = 1;
     $config['server_setting']['task_max_request'] = 5;
 }
 return $config;
