@@ -15,7 +15,6 @@ class Http extends Base {
      */
     protected function listen($host, $port, $type = null) {
         return new \Swoole\Http\Server($host, $port, SWOOLE_BASE);
-//        return new \swoole_http_server($host, $port);
     }
 
     protected function bindEvents() {

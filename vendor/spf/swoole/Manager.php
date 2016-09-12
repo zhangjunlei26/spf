@@ -41,6 +41,9 @@ class Manager extends Base {
 
     protected function reload() {
         $manager_id = $this->getManagerPid();
+        if($manager_id==='0'){
+            $manager_id = $this->getMasterPid();
+        }
         if (!$manager_id) {
             $msg = "[warning] can not find manager pid file. Manager reload failed!";
             echo Console::red($msg), PHP_EOL;
