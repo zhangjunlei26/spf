@@ -3,7 +3,7 @@ namespace spf\swoole\server;
 
 class WebSocket extends Http {
 
-    public function onOpen(\swoole_websocket_server $server, $request) {
+    public function onOpen($server, $request) {
         $this->worker->onOpen($server, $request);
     }
 
@@ -11,7 +11,7 @@ class WebSocket extends Http {
 
     }
 
-    public function onMessage(\swoole_websocket_server $server, $frame) {
+    public function onMessage($server, $frame) {
         $this->worker->onMessage($server, $frame);
     }
 
@@ -28,6 +28,6 @@ class WebSocket extends Http {
      * @return \swoole_websocket_server
      */
     protected function listen($host, $port, $type = null) {
-        return new \Swoole\Websocket\Server($host, $port);
+        return new \swoole\websocket\server($host, $port);
     }
 }

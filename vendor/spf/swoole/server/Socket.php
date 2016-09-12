@@ -22,7 +22,7 @@ class Socket extends Base {
      * @return
      */
     protected function listen($host, $port, $type = SWOOLE_SOCK_TCP) {
-        return new \Swoole\Server($host, $port, SWOOLE_PROCESS, $type);
+        return new \swoole\server($host, $port, SWOOLE_PROCESS, $type);
     }
 
     protected function bindEvents() {

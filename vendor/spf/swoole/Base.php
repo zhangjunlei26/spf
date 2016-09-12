@@ -61,7 +61,7 @@ class Base {
 
     public function getMasterPid() {
         $master_pid_file = self::getMasterPidFile($this->name);
-        return is_file($master_pid_file) ? file_get_contents($master_pid_file) : false;
+        return is_file($master_pid_file) ? intval(file_get_contents($master_pid_file)): false;
     }
 
     public static function getMasterPidFile($name) {
@@ -70,7 +70,7 @@ class Base {
 
     public function getManagerPid() {
         $manager_pid_file = self::getManagerPidFile($this->name);
-        return is_file($manager_pid_file) ? file_get_contents($manager_pid_file) : false;
+        return is_file($manager_pid_file) ? intval(file_get_contents($manager_pid_file)) : false;
     }
 
     public static function getManagerPidFile($name) {

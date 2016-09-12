@@ -4,7 +4,6 @@ namespace spf\swoole\worker;
 use spf\Container;
 use spf\helper\Console;
 use spf\Log;
-use spf\logger\Logger;
 
 class Base {
 
@@ -12,7 +11,6 @@ class Base {
     protected $name;
     protected $workerProcessName;
     protected $config;
-    protected $logger;
     protected $server;
 
     public function __construct($server, $serverName, $workerId, $processName, $config) {

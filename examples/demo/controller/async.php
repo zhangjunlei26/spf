@@ -29,8 +29,8 @@ class async extends Controller
     public function actionIndex()
     {
         $tcp = new \spark\client\Tcp('127.0.0.1', 9501, 'hello TCP!', 0.5);
-        $rs1 = yield $tcp->run();
-        $rs2 = yield $tcp->send('hello TCP again!')->run();
+        $rs1 = (yield $tcp->run());
+        $rs2 = (yield $tcp->send('hello TCP again!')->run());
         $ret = ['rs1' => $rs1, 'rs2' => $rs2];
         $this->json($ret);
     }
@@ -78,7 +78,7 @@ class async extends Controller
             ],
             [],//参数
         ]);
-        $rs = yield $task_client->run();
+        $rs = (yield $task_client->run());
         $this->json($rs);
     }
 
