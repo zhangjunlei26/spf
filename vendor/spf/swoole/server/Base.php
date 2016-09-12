@@ -5,8 +5,7 @@ use spf\helper\Console;
 use spf\swoole\worker\IHttpWorker;
 use spf\swoole\worker\Task;
 
-abstract class Base extends \spf\swoole\Base
-{
+abstract class Base extends \spf\swoole\Base {
 
     /**
      * @var
@@ -17,13 +16,11 @@ abstract class Base extends \spf\swoole\Base
      */
     protected $worker;
 
-    public function __construct($serverName)
-    {
+    public function __construct($serverName) {
         parent::__construct($serverName);
     }
 
-    public function start()
-    {
+    public function start() {
         $config = $this->config;
         try {
             $listen = $this->fixListenItem($config['listen']);
@@ -42,8 +39,7 @@ abstract class Base extends \spf\swoole\Base
         }
     }
 
-    protected function fixListenItem($listen)
-    {
+    protected function fixListenItem($listen) {
         $ret = [];
         if (is_scalar($listen)) {
             $listen = [[$listen]];
@@ -71,8 +67,7 @@ abstract class Base extends \spf\swoole\Base
      */
     abstract protected function listen($host, $port, $type = null);
 
-    protected function bindEvents()
-    {
+    protected function bindEvents() {
         $swoole = $this->server;
         $swoole->on('start', [$this, 'onStart']);
         $swoole->on('managerstart', [$this, 'onManagerStart']);
@@ -84,29 +79,29 @@ abstract class Base extends \spf\swoole\Base
         }
     }
 
-    public function onStart($server)
-    {
+    public function onStart($server) {
         $master_process_name = sprintf(self::MASTER_PROCESS_NAME, $this->name);
         $this->setProcessName($master_process_name);
         echo Console::green("onMasterStart: {$master_process_name}"), PHP_EOL;
         file_put_contents(self::getMasterPidFile($this->name), $server->master_pid);
-        file_put_contents(self::getManagerPidFile($this->name), $server->manager_pid);
+        if (empty($server->manager_pid) && $server->mode === SWOOLE_BASE) {
+            file_put_contents(self::getManagerPidFile($this->name), $server->master_pid);
+        } else {
+            file_put_contents(self::getManagerPidFile($this->name), $server->manager_pid);
+        }
     }
 
-    protected function setProcessName($name)
-    {
+    protected function setProcessName($name) {
         return (PHP_OS !== 'Darwin') ? cli_set_process_title($name) : false;
     }
 
-    public function onManagerStart($server)
-    {
+    public function onManagerStart($server) {
         $processName = sprintf(self::MANAGER_PROCESS_NAME, $this->name);
         $this->setProcessName($processName);
         echo Console::green("onManagerStart: {$processName}"), PHP_EOL;
     }
 
-    public function onWorkerStart($server, $workerId)
-    {
+    public function onWorkerStart($server, $workerId) {
         //opcache_reset();
         $worker_process_name = $this->makeWorkerName($server, $workerId);
         $this->setProcessName($worker_process_name);
@@ -122,24 +117,20 @@ abstract class Base extends \spf\swoole\Base
         $worker->onStart($server, $workerId);
     }
 
-    protected function makeWorkerName($server, $worker_id)
-    {
+    protected function makeWorkerName($server, $worker_id) {
         $type = $server->taskworker ? 'task' : 'event';//也可根据$worker_id>=worker_num也判断
         return $work_process_name = sprintf(self::WORKER_PROCESS_NAME, $this->name, $type, $worker_id);
     }
 
-    public function onWorkerStop($server, $worker_id)
-    {
+    public function onWorkerStop($server, $worker_id) {
         $this->worker->onShutdown($server, $worker_id);
     }
 
-    public function onTask($server, $task_id, $from_id, $data)
-    {
+    public function onTask($server, $task_id, $from_id, $data) {
         $this->worker->onTask($server, $task_id, $from_id, $data);
     }
 
-    public function onFinish($server, $task_id, $data)
-    {
+    public function onFinish($server, $task_id, $data) {
         $this->worker->onFinish($server, $task_id, $data);
     }
 }
