@@ -89,7 +89,6 @@ abstract class Base extends \spf\swoole\Base
         $master_process_name = sprintf(self::MASTER_PROCESS_NAME, $this->name);
         $this->setProcessName($master_process_name);
         echo Console::green("onMasterStart: {$master_process_name}"), PHP_EOL;
-        print_r($server);
         file_put_contents(self::getMasterPidFile($this->name), $server->master_pid);
         file_put_contents(self::getManagerPidFile($this->name), $server->manager_pid);
     }

@@ -76,4 +76,13 @@ class Base {
     public static function getManagerPidFile($name) {
         return sprintf(self::MANAGER_PID_FILE, $name);
     }
+
+    public function isRunning() {
+        $pid = $this->getMasterPid();
+        if ($pid) {
+            return posix_kill($pid, 0);
+        } else {
+            return false;
+        }
+    }
 }

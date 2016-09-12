@@ -29,7 +29,7 @@ class Base {
 
     public function onStart($server, $workerId) {
         $this->server = $server;
-        echo Console::green("onWorkerStart: {$this->workerProcessName}"), PHP_EOL;
+        echo Console::green("onWorkerStart: {$this->workerProcessName}\n");
     }
 
     public function onShutdown($server, $workerId) {
