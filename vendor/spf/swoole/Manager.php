@@ -11,7 +11,7 @@ class Manager extends Base {
 
     protected function start($name) {
         //日志初始化
-        $process = new \Swoole\Process(function (\Swoole\Process $worker) {
+        $process = new \swoole\process(function (\swoole\process $worker) {
             $worker->exec(self::PHP_BIN, [SPF_ROOT . '/server.php', $this->name]);
         }, false);
         return $process->start();

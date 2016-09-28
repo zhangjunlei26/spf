@@ -10,7 +10,7 @@ $config = [
     /**
      * 工作模式:development;testing;production
      */
-    'enviroment'     => 'development',
+    'enviroment'     => 'production',
     /**
      * 服务模式: Socket/Http/WebSocket
      */
@@ -51,20 +51,20 @@ $config = [
         'daemonize'           => 1,
         'debug_mode'          => 0,
         'backlog'             => 1024,
-        'cpu_affinity_ignore' => [0],
+        //'cpu_affinity_ignore' => [0],
 //        'user'           => '',
 //        'group'=>'',
 //        'chroot'              => '',
         //'reactor_num'              => 4,
         //默认启用CPU核数相同的工作进程，建议值为CPU核1-4倍
-        'worker_num'          => 1,
-        'task_worker_num'          => 5,
-        'task_max_request'         => 500000,
+        'worker_num'          => 2,
+        // 'task_worker_num'          => 0,
+        // 'task_max_request'         => 500000,
         'open_cpu_affinity'   => 1,
         'open_tcp_nodelay'    => 1,
         'tcp_defer_accept'    => 3,//http服务器，可以提升响应速度
         //'log_file'                 => APP_PATH . '/var/log/swoole.log',
-//        'enable_reuse_port'        => true,//Linux-3.9.0+
+       'enable_reuse_port'        => true,//Linux-3.9.0+
     ],
 ];
 

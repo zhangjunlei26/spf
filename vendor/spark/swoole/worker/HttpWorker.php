@@ -41,9 +41,7 @@ class HttpWorker extends Base implements IHttpWorker {
             return false;
         }
         $err = new \ErrorException($errmsg, 0, $errno, $file, $line);
-        if ($this->logger) {
-            Log::error($err->__toString());
-        }
+        Log::error($err->__toString());
         return true;
     }
 
